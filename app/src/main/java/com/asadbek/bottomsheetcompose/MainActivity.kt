@@ -27,6 +27,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             BottomSheetComposeTheme {
+                // animationSpec = spring(dampingRatio = Spring.DampingRatioLowBouncy) == animatsiyasi
                 val sheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Collapsed, animationSpec = spring(dampingRatio = Spring.DampingRatioLowBouncy))
                 val scaffoldState = rememberBottomSheetScaffoldState(bottomSheetState = sheetState)
                 val scope = rememberCoroutineScope()
@@ -37,25 +38,26 @@ class MainActivity : ComponentActivity() {
                         .fillMaxWidth()
                         .height(300.dp),
                     contentAlignment = Alignment.Center){
-                        Text(text = "Bottom sheet", fontSize = 60.sp)
+                        Text(text = "Bottom sheet", fontSize = 60.sp) // bottom sheet matni va yozuv o`lchami
                     }
-                }, sheetBackgroundColor = Color.Gray) {
+                }, sheetBackgroundColor = Color.Green) { // bottom sheet fon rangi
                    Box(
                        modifier = Modifier
                            .fillMaxSize(),
                    ){
-                       Button(onClick = {
-                           scope.launch {
+                       Button(onClick = { // button on click listeneri
+                           scope.launch { // sheetState ning expandi scope.launch ichida ishlaydi
                                if (sheetState.isCollapsed){
-                                   sheetState.expand()
+                                   sheetState.expand() // button bosilganda bottom sheet yuqoriga ko`tariladi ya`ni ishlaydi.
                                }else{
-                                   sheetState.collapse()
+                                   sheetState.collapse() // button bosilganda bottom sheet pastga ya`ni o`z o`rniga qaytadi.
                                }
 
                            }
 
                        }) {
                            Text(text = "Bottom sheet fraction: ${sheetState.progress.fraction}")
+                           // fraction - progress darajasini ko`rsatib beradi
                        }
                    }
                 }
